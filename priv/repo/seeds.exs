@@ -9,3 +9,10 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+{:ok, _cs} =
+  GoraPicker.Admin.create_user(%{
+    "password" => "teste",
+    "role" => "user",
+    "name" => "ShawnBurnett",
+    "email" => "ShawnBurnett@mail.com"
+  })
