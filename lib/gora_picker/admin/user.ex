@@ -22,14 +22,12 @@ defmodule GoraPicker.Admin.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :password_hash, :role])
+    |> cast(attrs, [:name, :email, :password, :role])
     |> validate_required([:name, :email, :role])
     |> validate_format(:email, ~r/@/)
     |> validate_inclusion(:role, @acceptable_roles)
     |> unique_constraint(:email)
     |> put_password_hash()
   end
-  #
-  defp put_password_hash(changeset), do: changeset
 
 end
