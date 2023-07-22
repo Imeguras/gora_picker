@@ -4,6 +4,7 @@ defmodule GoraPicker.Features do
   """
 
   import Ecto.Query, warn: false
+  alias Ecto.Changeset
   alias GoraPicker.Repo
 
   alias GoraPicker.Features.Package_Type
@@ -150,16 +151,20 @@ defmodule GoraPicker.Features do
   def create_package(attrs \\ %{}) do
 
     #_fetch_default = Repo.find(Package_Type, %{"name" => "Other"})
-    package__type_ref = attrs["package__type_id"]
+    package__type_rep = attrs["package__type_id"]
     |> (&(Repo.get(Package_Type, &1))).()
-    |> IO.inspect
-          #|| Repo.find(Package_Type, %{"name" => "Other"})
-          #|| throw(%{message: "Package Type missing, failed to set it to a default value."})
+    #|> IO.inspect
 
-    #%Package{}
-    #|> Package.changeset(attrs)
-    #|> ChangeSet.put_assoc(:package__type, package__type_ref)
-    #|> Repo.insert()
+
+
+    #|| Repo.get_by(Package_Type, %{"name" => "Other"})
+    #|| throw(%{message: "Package Type missing, failed to set it to a default value."})
+    #|> IO.inspect
+
+    %Package{}
+    |> Package.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:package__type, package__type_rep)
+    |> Repo.insert()
   end
 
   @doc """

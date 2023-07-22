@@ -13,7 +13,7 @@ defmodule GoraPicker.Features.Package_Type do
   @doc false
   def changeset(package__type, attrs) do
     package__type
-    |> cast(attrs, [:name, :packages])
+    |> cast(attrs, [:name])
     |> validate_required([:name])
     |> foreign_key_constraint(:packages)
   end
