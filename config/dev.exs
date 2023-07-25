@@ -57,6 +57,16 @@ config :gora_picker, GoraPickerWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
+config :gora_picker, :phoenix_swagger,
+  swagger_files: %{
+    "priv/static/swagger.json" => [
+      router: GoraPickerWeb.Router,
+      endpoint: GoraPickerWeb.Endpoint
+    ]
+  }
+
+config :phoenix_swagger, json_library: Jason
+
 config :gora_picker, GoraPickerWeb.Endpoint,
   live_reload: [
     patterns: [

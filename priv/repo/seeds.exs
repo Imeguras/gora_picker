@@ -52,18 +52,19 @@ defmodule Start_Seeding do
         "email" => "ShawnBurnett@mail.com"
       })
     pla.(cs.id)
+  end
+    list_countries = GoraPicker.Origin.list_countries()
+  if list_countries != [] do
+    ids = Enum.map(list_comp, &(&1.id))
+    IO.puts "Comp_package_types already created"
+  end
 
-
-
-    end
-
-
-  #com_package_types_id = []
-  #push_packaget_ids = fn (id) -> com_package_types_id = [id | com_package_types_id] end
-
-
-    if GoraPicker.Features.list_comp_package_types() != [] do
+    list_comp = GoraPicker.Features.list_comp_package_types()
+    if list_comp != [] do
+      #damn first timer, guess im not that bad in functional kek...
+      ids = Enum.map(list_comp, &(&1.id))
       IO.puts "Comp_package_types already created"
+
     else
       pla = & (Seeding_State.place_data(agent_state, :package_type_ids, &1))
       {:ok, cs} =

@@ -1,5 +1,7 @@
 defmodule GoraPickerWeb.Router do
+  alias GoraPickerWeb.UserController
   use GoraPickerWeb, :router
+
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -12,13 +14,56 @@ defmodule GoraPickerWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    resources "/users", UserController
   end
+
+
+
+  scope "/api", GoraPickerWeb do
+    pipe_through :api
+    get "/users", UserController, :index
+    put "/users", UserController, :edit
+    post "/users", UserController, :create
+    delete "/users", UserController, :delete
+  end
+
+  def swagger_info do
+    %{
+      schemes: ["http", "https", "ws", "wss"],
+      info: %{
+        version: "1.0",
+        title: "Gora_Picker API",
+        description: "API Documentation for Gora_Picker v1",
+        contact: %{
+          name: "Joao Vieira",
+          email: "joaovieira@ieee.org"
+        }
+      },
+      #securityDefinitions: %{
+      #  Bearer: %{
+      #    type: "apiKey",
+      #    name: "Authorization",
+      #    description:
+      #    "API Token must be provided via `Authorization: Bearer ` header",
+      #in: "header"
+      #  }
+      #},
+      consumes: ["application/json"],
+      produces: ["application/json"]
+      #tags: [
+      #  %{name: "Users", description: "User resources"},
+      #]
+    }
+  end
+
 
   scope "/", GoraPickerWeb do
     pipe_through :browser
 
     get "/", PageController, :home
   end
+
+
 
   # Other scopes may use custom stacks.
   # scope "/api", GoraPickerWeb do
