@@ -18,8 +18,8 @@ defmodule GoraPickerWeb.Router do
   end
 
 
-
-  scope "/api", GoraPickerWeb do
+  #auto generated stuff from putting alias really confuses this...
+  scope "/api" do
     pipe_through :api
     get "/users", UserController, :index
     put "/users", UserController, :edit
@@ -63,6 +63,11 @@ defmodule GoraPickerWeb.Router do
     get "/", PageController, :home
   end
 
+  scope "/api/swagger" do
+    forward "/", PhoenixSwagger.Plug.SwaggerUI,
+      otp_app: :gora_picker,
+      swagger_file: "swagger.json"
+  end
 
 
   # Other scopes may use custom stacks.
